@@ -36,6 +36,9 @@ h1{
         mode = 0;
         freq2 = 0;
         freq3 = 0;
+
+        display();
+        
     }
 
     function roll(){
@@ -45,8 +48,12 @@ h1{
         display();
     }
 
+    function mean(){
+        if()
+    }
+
     function display(){
-        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " Total: " + sum;
+        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode + " FREQUENCY OF DOUBLES: " + freq2 + " FREQUENCY OF TRIPLES: " + freq3;
     }
 
 </script>
