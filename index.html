@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Document</title> <script>
-  function initialize() {
-    inputContainer = document-getElementById ("inputform");
-    dice = '";
-    rolls = "";
-    diel = 0;
-    die2 = 0;
-    die = 0;
-    total = 0;
-    diceVal = Il;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+body{
+    background-color: rgb(29, 89, 129);
+}
+
+h1{
+    color: white;
+}
+
+</style>
+<script>
+
+    function initialize(){
+        ouptuDiv = document.getElementById("output");
+        dice1 = 0;
+        dice2 = 0;
+        dice3 = 0;
+        mean = 0;
+        median = 0;
+        mode = 0;
+        freq2 = 0;
+        freq3 = 0;
+    }
+
+    function roll(){
+        dice1 = Math.floor( Math.random() * 6 ) +1;
+        dice2 = Math.floor( Math.random() * 6 ) +1;
+        dice3 = Math.floor( Math.random() * 6 ) +1;
+        sum = dice1 + dice2 + dice3
+        display();
+    }
+
+    function display(){
+        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " Total: " + sum;
+    }
+
+</script>
+<body onload="initialize();">
+    <h1>DICE ROLL</h1>
+
+    <h2>ENTER DICE INFORMATION</h2>
+
+    <h3>NUM OF DICE</h3>
+    
+    <input type="radio" id="1" name="numDice" value="1"/>
+    <label for="1">1</label><br>
+    <input type="" id="2" name="numDice" value="2"/>
+    <label for="2">2</label><br>
+    <input type="radio" id="？" name="numpice"value="3"/>
+    <label for="3">3</label><br>
+
+    <button onclick="roll();">CLICK TO ROLL DICE</button>
+    
+    <div id="output"></div>
+
+</body>
+</html>
