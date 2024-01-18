@@ -40,11 +40,14 @@ h1{
         dice1 = 0;
         dice2 = 0;
         dice3 = 0;
+        freq = 0;
         mean = 0;
         median = 0;
         mode = 0;
         freq2 = 0;
         freq3 = 0;
+
+        arr = [dice1, dice2, dice3];
 
         display();
         
@@ -52,6 +55,10 @@ h1{
 
     function roll(){
 
+        dice1 = Math.floor( Math.random() * 6 ) +1;
+        dice2 = Math.floor( Math.random() * 6 ) +1;
+        dice3 = Math.floor( Math.random() * 6 ) +1;
+        /*
         if(diceNum === 1){
             dice1 = Math.floor( Math.random() * 6 ) +1;
         }
@@ -63,17 +70,41 @@ h1{
             dice1 = Math.floor( Math.random() * 6 ) +1;
             dice2 = Math.floor( Math.random() * 6 ) +1;
             dice3 = Math.floor( Math.random() * 6 ) +1;
-        }
+        }*/
+        
+        count();
+        average();
+        med(arr);
 
         display();
     }
 
+    function count(){
+        freq = dice1 + dice2 + dice3;
+    }
+
     function average(){
+        sum = dice1 + dice2 + dice3;
+        mean = sum / 3;
+    }
+    
+    function med(arr){
+        arr.sort((a, b) => a - b);
+        middleIndex = Math.floor(arr.length / 2);
+
+    if (arr.length % 2 === 0) {
+        median = (arr[middleIndex - 1] + arr[middleIndex]) / 2;
+    } else {
+        median = arr[middleIndex];
+    }
+    }
+
+    function mode(){
         
     }
 
     function display(){
-        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode + " FREQUENCY OF DOUBLES: " + freq2 + " FREQUENCY OF TRIPLES: " + freq3;
+        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " FREQUENCY OF EACH RESULT : " + freq +" MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode + " FREQUENCY OF DOUBLES: " + freq2 + " FREQUENCY OF TRIPLES: " + freq3;
     }
 
 </script>
