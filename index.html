@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,99 +24,204 @@ h1{
     color: white;
 }
 
+table, th, td {
+  border:1px solid orange;
+}
+
 </style>
 <script>
-
-    var info = document.getElementById("info");
-    info.addEventListener("click",information);
-
-    function information(){
-        var diceNum = document.getElementById("diceNum").value;
-        console.log(document.getElementById("diceNum").value);
-        var rollNum = document.getElementById("rollNum").value;
-    }
 
     function initialize(){
         ouptuDiv = document.getElementById("output");
         dice1 = 0;
         dice2 = 0;
         dice3 = 0;
-        freq = 0;
         mean = 0;
         median = 0;
         mode = 0;
+        freq = 0;
         freq2 = 0;
         freq3 = 0;
-
-        display();
-        
+        table = document.getElementById("table");
     }
 
     function roll(){
+        var diceNum=0;
+        var list = []
 
-        dice1 = Math.floor( Math.random() * 6 ) +1;
-        dice2 = Math.floor( Math.random() * 6 ) +1;
-        dice3 = Math.floor( Math.random() * 6 ) +1;
-        /*
-        if(diceNum === 1){
-            dice1 = Math.floor( Math.random() * 6 ) +1;
+        for (let i = 1; i < 4; i++) {
+            if(document.getElementById(i).checked == true){
+                diceNum = document.getElementById(i).value;
+            }
         }
-        if(diceNum === 2){
+        
+        var rollNum = document.querySelector('#rollsNum').value;
+        
+        if(diceNum == 1){
+            for (let i = 0; i < rollNum; i++){
+            dice1 = Math.floor( Math.random() * 6 ) +1;
+            }
+                list = [dice1];
+               
+                count(list);
+                average(list);
+                med(list);
+                mod(list);
+                display1();
+        }
+
+        if (diceNum == 2){
+            for (let i = 0; i < rollNum; i++){
             dice1 = Math.floor( Math.random() * 6 ) +1;
             dice2 = Math.floor( Math.random() * 6 ) +1;
+            }
+            list = [dice1, dice2];
+           
+            count(list);
+            average(list);
+            med(list);
+            mod(list);
+            double(list);
+            display2();
         }
-        if(diceNum === 3){
+
+        if(diceNum == 3){
+            for (let i = 0; i < rollNum; i++){
             dice1 = Math.floor( Math.random() * 6 ) +1;
             dice2 = Math.floor( Math.random() * 6 ) +1;
             dice3 = Math.floor( Math.random() * 6 ) +1;
-        }*/
-        
-        list = [dice1, dice2, dice3];
-
-        count();
-        average();
-        med(list);
-        mod(list);
-
+            }
+            list = [dice1, dice2, dice3];
+            
+            count(list);
+            average(list);
+            med(list);
+            mod(list);
+            double(list);
+            triple(list);
+            display3();
+        }
+    
         display();
     }
 
-    function count(){
-        freq = dice1 + dice2 + dice3;
+    function count(arr){
+        freq = 0;
+        for (i=0; i<arr.length; i++){
+            freq+= arr[i]; 
+        }
     }
 
-    function average(){
-        sum = dice1 + dice2 + dice3;
-        mean = sum / 3;
-    }
-    
-    function med(arr){
-        arr = arr.sort((a, b) => a - b);
-        idx = Math.floor(arr.length / 2);
-        
-        if (arr.length % 2 === 0) {
-            median = (arr[idx - 1] + arr[idx]) / 2;
-        } else {
-        median = arr[idx];
-    }
-    }
-
-    function mod(arr){
+    function double(arr){
+        freq2=0;
         var numMapping = {};
         for(var i = 0; i < arr.length; i++){
             if(numMapping[arr[i]] === undefined){
                 numMapping[arr[i]] = 0;
             }        
             numMapping[arr[i]] += 1;
+
+            if (numMapping[arr[i]] == 2){
+                freq2++;
+            }
+        }
+        if (numMapping[arr[0]] == 3){
+                freq2--;
+            }
+    }
+
+    function triple(arr){
+        freq3=0;
+        var numMapping = {};
+        for(var i = 0; i < arr.length; i++){
+            if(numMapping[arr[i]] === undefined){
+                numMapping[arr[i]] = 0;
+            }        
+            numMapping[arr[i]] += 1;
+
+            if (numMapping[arr[i]] == 3){
+                freq3++;
+            }
         }
     }
 
-    function display(){
+    function average(arr){
+        sum = 0; 
+ 
+        for (i=0; i<arr.length; i++){
+            sum += arr[i]; 
+ 
+       mean = sum / arr.length; 
+        }
+    }
+
+    function med(arr){
+        arr = arr.sort((a, b) => a - b);
+        idx = Math.floor(arr.length / 2);
+        
+        if (arr.length % 2 === 0) {
+            median = (arr[idx - 1] + arr[idx]) / 2;
+        } 
+        else {
+        median = arr[idx];
+        }
+    }
+
+   function mod(arr){
+    
+    mode = arr;
+    maxCount = 1;
+    for (i = 0; i < arr.length; i++) {
+        value = arr[i];
+        counter = 0;
+        
+        for (j = 0; j < arr.length; j++) {
+            
+            if (arr[j] == value) {
+            counter++;
+        }
+        
+        if (counter > maxCount) {
+            
+            mode = value;
+            maxCount = counter;
+        }
+    }
+}
+
+}
+
+function display(){
+    let table = document.getElementById("myTable");
+    let row = table.insertRow(-1);
+    let c1 = row.insertCell(0);
+    let c2 = row.insertCell(1);
+
+      c1.innerText = freq;
+      c2.innerText = freq2;
+      c3.innerText = freq3;
+}
+
+    function display1(){
+        output.innerHTML = " DICE 1: " + dice1 + " FREQUENCY OF EACH RESULT : " + freq + " MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode ;
+    }
+    function display3(){
         output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " DICE 3: " + dice3 + " FREQUENCY OF EACH RESULT : " + freq +" MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode + " FREQUENCY OF DOUBLES: " + freq2 + " FREQUENCY OF TRIPLES: " + freq3;
     }
 
+    function display2(){
+        output.innerHTML = " DICE 1: " + dice1 + " DICE 2: " + dice2 + " FREQUENCY OF EACH RESULT : " + freq +" MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode + " FREQUENCY OF DOUBLES: " + freq2 ;
+    }
+
+    function display1(){
+        output.innerHTML = " DICE 1: " + dice1 + " FREQUENCY OF EACH RESULT : " + freq + " MEAN: " + mean + " MEDIAN: " + median + " MODE: " + mode ;
+    }
+
 </script>
-<body onload="initialize();">
+
+
+
+<body>
     <h1>DICE ROLL</h1>
 
     <h2>ENTER DICE INFORMATION</h2>
@@ -128,15 +234,21 @@ h1{
         <label for="1">1</label><br>
         <input type="radio" id="2" name = "diceNum" value="2">
         <label for="2">2</label><br>
-        <input type="radio" id="3" name = "diceNum" value="2">
+        <input type="radio" id="3" name = "diceNum" value="3">
         <label for="3">3</label><br>
 
         <label>NUM OF ROLLS (1-3)</label><br>
-        <input type="text" id="rollsNum"><br><br>
-        <button id="info">SUBMIT</button></br>
+        <input type="number" id="rollsNum"><br><br>
+       
       </form>
 
     <button onclick="roll();">CLICK TO ROLL DICE</button>
+
+    <table style="width:100%" id="myTable">
+        <th>FREQUENCY OF EACH RESULT</th>
+        <th>FREQUENCY OF DOUBLES</th>
+        <th>FREQUENCY OF TRIPLES</th>
+    </table>
     
     <div id="output"></div>
 
